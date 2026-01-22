@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import fi.joonas.week1tasks.domain.mockTasks
 import fi.joonas.week1tasks.ui.theme.Week1Theme
 
 class MainActivity : ComponentActivity() {
@@ -18,10 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Week1Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(
-                        tasks = mockTasks,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    HomeScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
