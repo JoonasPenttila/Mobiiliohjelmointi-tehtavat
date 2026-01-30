@@ -1,5 +1,6 @@
 package fi.joonas.week1tasks.domain
 
+import fi.joonas.week1tasks.model.Task
 import java.time.LocalDate
 
 val mockTasks = listOf(

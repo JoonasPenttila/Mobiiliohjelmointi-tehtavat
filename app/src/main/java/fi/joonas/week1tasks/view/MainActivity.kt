@@ -1,4 +1,4 @@
-package fi.joonas.week1tasks
+package fi.joonas.week1tasks.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,8 +16,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Week1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(modifier = Modifier.padding(innerPadding))
+                Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
+                    HomeScreen(modifier = Modifier.Companion.padding(innerPadding))
                 }
             }
         }

@@ -22,3 +22,7 @@ addTask, toggleDone, removeTask, filterByDone, sortByDueDate, clearFilter.
 
 HomeScreen näyttää tehtävät LazyColumnissa ja sisältää Add‑kentän.
 ViewModel on parempi kuin remember, koska tila säilyy rotaation yli.
+
+# Viikkotehtävä 3
+
+Tässä viikossa siirsin sovelluksen MVVM‑rakenteeseen ja otin StateFlowin käyttöön tilanhallintaan. Lisäksi tein uuden DetailDialogin, jossa käyttäjä voi muokata ja poistaa tehtäviä. Suurin näkyvä muutos käyttäjälle on siis tehtävän editointi dialogissa.

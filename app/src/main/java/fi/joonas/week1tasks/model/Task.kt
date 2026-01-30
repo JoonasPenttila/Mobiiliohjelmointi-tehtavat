@@ -1,4 +1,4 @@
-package fi.joonas.week1tasks.domain
+package fi.joonas.week1tasks.model
 
 import java.time.LocalDate
 

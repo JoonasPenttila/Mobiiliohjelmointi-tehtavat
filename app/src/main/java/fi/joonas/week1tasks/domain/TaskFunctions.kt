@@ -1,5 +1,7 @@
 package fi.joonas.week1tasks.domain
 
+import fi.joonas.week1tasks.model.Task
+
 // Lisää uusi task listan perään
 fun addTask(list: List<Task>, task: Task): List<Task> {
     return list + task
