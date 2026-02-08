@@ -26,3 +26,18 @@ ViewModel on parempi kuin remember, koska tila säilyy rotaation yli.
 # Viikkotehtävä 3
 
 Tässä viikossa siirsin sovelluksen MVVM‑rakenteeseen ja otin StateFlowin käyttöön tilanhallintaan. Lisäksi tein uuden DetailDialogin, jossa käyttäjä voi muokata ja poistaa tehtäviä. Suurin näkyvä muutos käyttäjälle on siis tehtävän editointi dialogissa.
+
+# Viikkotehtävä 4
+
+Navigointi tarkoittaa eri näkymien välillä siirtymistä. Compose hoitaa tämän NavControllerin avulla.
+NavController ohjaa, mihin ruutuun siirrytään.
+NavHost listaa kaikki ruudut ja näyttää niistä kulloinkin aktiivisen.
+Alavalikosta voi siirtyä Home ↔ Calendar ↔ Settings. Navigointi on toteutettu NavHostin sisällä, ja jokainen ruutu on oma composable.
+
+Sovelluksessa on yksi yhteinen TaskViewModel, jota Home ja Calendar käyttävät.
+ViewModelin StateFlow‑tila jaetaan molemmille ruuduille, joten muutokset näkyvät heti kaikkialla.
+
+CalendarScreen ryhmittelee tehtävät dueDate‑arvon mukaan ja näyttää ne päivämääräotsikoiden alla.
+
+AddTaskDialog lisää uuden tehtävän ViewModeliin.
+EditTaskDialog avautuu tehtävää klikatessa ja mahdollistaa muokkauksen tai poistamisen.
