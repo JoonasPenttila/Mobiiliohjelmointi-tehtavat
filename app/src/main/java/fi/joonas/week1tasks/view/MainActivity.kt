@@ -7,29 +7,32 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import fi.joonas.week1tasks.data.local.AppDatabase
+import fi.joonas.week1tasks.data.repository.TaskRepository
 import fi.joonas.week1tasks.ui.theme.Week1Theme
 import fi.joonas.week1tasks.viewmodel.TaskViewModel
-import fi.joonas.week1tasks.view.CalendarScreen
-import fi.joonas.week1tasks.view.HomeScreen
-import fi.joonas.week1tasks.view.SettingsScreen
-import fi.joonas.week1tasks.view.BottomNavigationBar
-import fi.joonas.week1tasks.view.ROUTE_HOME
-import fi.joonas.week1tasks.view.ROUTE_CALENDAR
-import fi.joonas.week1tasks.view.ROUTE_SETTINGS
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "tasks.db"
+        ).build()
+
+        val repository = TaskRepository(db.taskDao())
+        val viewModel = TaskViewModel(repository)
+
         setContent {
             Week1Theme {
                 val navController = rememberNavController()
-                val viewModel: TaskViewModel = viewModel()
 
                 Scaffold(
                     bottomBar = {

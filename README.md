@@ -1,43 +1,21 @@
-# Viikkotehtävä 1
+Kirjoita lyhyesti:
 
-Sovelluksessa käytetään Task-data classia (id, title, description, priority, dueDate, done).
-Mock-data sisältää 6 tehtävää.
-
-Kotlin-funktiot:
-- addTask: lisää uuden tehtävän listaan
-- toggleDone: vaihtaa tehtävän done-tilan
-- filterByDone: suodattaa tehtävät tilan mukaan
-- sortByDueDate: järjestää tehtävät eräpäivän mukaan
-
-HomeScreen näyttää mock-listan ja napit käyttävät funktioita.
+mitä Room tekee (Entity–DAO–Database–Repository–ViewModel–UI)
+Room tallentaa datan pysyvästi.
+Entity = tietomalli, DAO = kyselyt, Database = yhdistää DAO:t, Repository = välittää datan, ViewModel = hallitsee tilaa, UI = näyttää Flow-datan.
 
 
-# Viikkotehtävä 2
+projektisi rakenne:
+/data/model → Entity
+/data/local → DAO + AppDatabase
+/data/repository → Repository
+/viewmodel → ViewModel
+/ui → Compose-näkymät
 
-Lista siirrettiin ViewModeliin (TaskViewModel), jossa sitä hallitaan mutableStateOf‑tilalla.
-HomeScreen käyttää viewModel() ja UI päivittyy automaattisesti.
 
-Uudet toiminnot ViewModelissa:
-addTask, toggleDone, removeTask, filterByDone, sortByDueDate, clearFilter.
+miten datavirta kulkee:
+UI → ViewModel → Repository → DAO → Room
+Room → Flow → ViewModel → UI
 
-HomeScreen näyttää tehtävät LazyColumnissa ja sisältää Add‑kentän.
-ViewModel on parempi kuin remember, koska tila säilyy rotaation yli.
-
-# Viikkotehtävä 3
-
-Tässä viikossa siirsin sovelluksen MVVM‑rakenteeseen ja otin StateFlowin käyttöön tilanhallintaan. Lisäksi tein uuden DetailDialogin, jossa käyttäjä voi muokata ja poistaa tehtäviä. Suurin näkyvä muutos käyttäjälle on siis tehtävän editointi dialogissa.
-
-# Viikkotehtävä 4
-
-Navigointi tarkoittaa eri näkymien välillä siirtymistä. Compose hoitaa tämän NavControllerin avulla.
-NavController ohjaa, mihin ruutuun siirrytään.
-NavHost listaa kaikki ruudut ja näyttää niistä kulloinkin aktiivisen.
-Alavalikosta voi siirtyä Home ↔ Calendar ↔ Settings. Navigointi on toteutettu NavHostin sisällä, ja jokainen ruutu on oma composable.
-
-Sovelluksessa on yksi yhteinen TaskViewModel, jota Home ja Calendar käyttävät.
-ViewModelin StateFlow‑tila jaetaan molemmille ruuduille, joten muutokset näkyvät heti kaikkialla.
-
-CalendarScreen ryhmittelee tehtävät dueDate‑arvon mukaan ja näyttää ne päivämääräotsikoiden alla.
-
-AddTaskDialog lisää uuden tehtävän ViewModeliin.
-EditTaskDialog avautuu tehtävää klikatessa ja mahdollistaa muokkauksen tai poistamisen.
+linkki demovideoon:
+https://youtu.be/5Dr3m7UWzTs

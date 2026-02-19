@@ -6,12 +6,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import fi.joonas.week1tasks.model.Task
+import fi.joonas.week1tasks.data.model.TaskEntity
 import fi.joonas.week1tasks.viewmodel.TaskViewModel
 
 @Composable
 fun EditTaskDialog(
-    task: Task,
+    task: TaskEntity,
     viewModel: TaskViewModel,
     onDismiss: () -> Unit
 ) {
@@ -46,7 +46,7 @@ fun EditTaskDialog(
                 Row {
 
                     TextButton(onClick = {
-                        viewModel.removeTask(task.id)
+                        viewModel.removeTask(task)
                         onDismiss()
                     }) {
                         Text("Delete")
@@ -60,7 +60,7 @@ fun EditTaskDialog(
                         val updated = task.copy(
                             title = title,
                             description = description,
-                            dueDate = dueDate
+                            dueDate = dueDate.ifBlank { null }
                         )
                         viewModel.updateTask(updated)
                         onDismiss()

@@ -1,32 +1,54 @@
 package fi.joonas.week1tasks.viewmodel
 
 import androidx.lifecycle.ViewModel
-import fi.joonas.week1tasks.model.Task
-import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.viewModelScope
+import fi.joonas.week1tasks.data.model.TaskEntity
+import fi.joonas.week1tasks.data.repository.TaskRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class TaskViewModel : ViewModel() {
+class TaskViewModel(
+    private val repository: TaskRepository
+) : ViewModel() {
 
-    private val _tasks = MutableStateFlow<List<Task>>(emptyList())
-    val tasks: StateFlow<List<Task>> = _tasks
+    val tasks: StateFlow<List<TaskEntity>> =
+        repository.tasks.stateIn(
+            viewModelScope,
+            SharingStarted.Lazily,
+            emptyList()
+        )
 
-    fun addTask(task: Task) {
-        _tasks.value = _tasks.value + task
-    }
-
-    fun toggleDone(taskId: Int) {
-        _tasks.value = _tasks.value.map {
-            if (it.id == taskId) it.copy(done = !it.done) else it
+    fun addTask(title: String, description: String, dueDate: String?) {
+        viewModelScope.launch {
+            repository.add(
+                TaskEntity(
+                    title = title,
+                    description = description,
+                    priority = 1,
+                    dueDate = dueDate,
+                    done = false
+                )
+            )
         }
     }
 
-    fun removeTask(taskId: Int) {
-        _tasks.value = _tasks.value.filterNot { it.id == taskId }
+    fun updateTask(task: TaskEntity) {
+        viewModelScope.launch {
+            repository.update(task)
+        }
     }
 
-    fun updateTask(updated: Task) {
-        _tasks.value = _tasks.value.map {
-            if (it.id == updated.id) updated else it
+    fun removeTask(task: TaskEntity) {
+        viewModelScope.launch {
+            repository.delete(task)
+        }
+    }
+
+    fun toggleDone(task: TaskEntity) {
+        viewModelScope.launch {
+            repository.update(task.copy(done = !task.done))
         }
     }
 }

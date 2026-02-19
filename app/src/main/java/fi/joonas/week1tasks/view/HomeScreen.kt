@@ -9,7 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.joonas.week1tasks.model.Task
+import fi.joonas.week1tasks.data.model.TaskEntity
 import fi.joonas.week1tasks.viewmodel.TaskViewModel
 
 @Composable
@@ -19,9 +19,8 @@ fun HomeScreen(
 ) {
     val tasks by viewModel.tasks.collectAsState()
 
-    // Dialogien tilat
     var showAddDialog by remember { mutableStateOf(false) }
-    var taskToEdit by remember { mutableStateOf<Task?>(null) }
+    var taskToEdit by remember { mutableStateOf<TaskEntity?>(null) }
 
     Scaffold(
         floatingActionButton = {
@@ -31,7 +30,11 @@ fun HomeScreen(
         }
     ) { padding ->
 
-        Column(modifier = modifier.padding(padding).padding(16.dp)) {
+        Column(
+            modifier = modifier
+                .padding(padding)
+                .padding(16.dp)
+        ) {
 
             Text(
                 text = "Task List",
@@ -54,15 +57,15 @@ fun HomeScreen(
                         Row {
                             Checkbox(
                                 checked = task.done,
-                                onCheckedChange = { viewModel.toggleDone(task.id) }
+                                onCheckedChange = { viewModel.toggleDone(task) }
                             )
                             Column {
                                 Text(task.title)
-                                Text(task.dueDate.toString())
+                                Text(task.dueDate ?: "")
                             }
                         }
 
-                        Button(onClick = { viewModel.removeTask(task.id) }) {
+                        Button(onClick = { viewModel.removeTask(task) }) {
                             Text("X")
                         }
                     }
@@ -71,7 +74,6 @@ fun HomeScreen(
         }
     }
 
-    // ADD DIALOG
     if (showAddDialog) {
         AddTaskDialog(
             viewModel = viewModel,
@@ -79,7 +81,6 @@ fun HomeScreen(
         )
     }
 
-    // EDIT DIALOG
     taskToEdit?.let { task ->
         EditTaskDialog(
             task = task,

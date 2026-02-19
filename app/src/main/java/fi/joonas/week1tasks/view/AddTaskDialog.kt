@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import fi.joonas.week1tasks.model.Task
 import fi.joonas.week1tasks.viewmodel.TaskViewModel
 
 @Composable
@@ -48,15 +47,11 @@ fun AddTaskDialog(
                     }
 
                     TextButton(onClick = {
-                        val newTask = Task(
-                            id = viewModel.tasks.value.size + 1,
+                        viewModel.addTask(
                             title = title,
                             description = description,
-                            priority = 1,
-                            dueDate = dueDate,
-                            done = false
+                            dueDate = dueDate.ifBlank { null }
                         )
-                        viewModel.addTask(newTask)
                         onDismiss()
                     }) {
                         Text("Save")
